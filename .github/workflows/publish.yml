@@ -3,6 +3,11 @@ name: publish
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version'
+        required: true
 
 jobs:
 
@@ -19,7 +24,6 @@ jobs:
 
     env:
       IMAGE_NAME: $( echo ghcr.io/${GITHUB_REPOSITORY} )
-      IMAGE_VERSION: $( echo ${GITHUB_REF#"refs/tags/"} )
       IMAGE_LATEST: '8.1-fpm'
 
     steps:
@@ -32,20 +36,28 @@ jobs:
         run: |
           docker build . \
             --file Dockerfile \
-            --tag ${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}-${{ matrix.php-version }} \
+            --tag ${{ env.IMAGE_NAME }}:${{ matrix.php-version }} \
             --build-arg PHP_VERSION=${{ matrix.php-version }}
 
-      - name: "Tag alias image"
+      - name: "Tag alias image (manual)"
+        if: github.event_name == 'workflow_dispatch'
         run: |
           docker tag \
-            ${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}-${{ matrix.php-version }} \
-            ${{ env.IMAGE_NAME }}:${{ matrix.php-version }}
+            ${{ env.IMAGE_NAME }}:${{ matrix.php-version }} \
+            ${{ env.IMAGE_NAME }}:${{ github.event.inputs.version }}-${{ matrix.php-version }}
+
+      - name: "Tag alias image (release)"
+        if: github.event_name == 'release'
+        run: |
+          docker tag \
+            ${{ env.IMAGE_NAME }}:${{ matrix.php-version }} \
+            ${{ env.IMAGE_NAME }}:$( echo ${GITHUB_REF#"refs/tags/"} )-${{ matrix.php-version }}
 
       - name: "Tag latest image"
         if: matrix.php-version == env.IMAGE_LATEST
         run: |
           docker tag \
-            ${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}-${{ matrix.php-version }} \
+            ${{ env.IMAGE_NAME }}:${{ matrix.php-version }} \
             ${{ env.IMAGE_NAME }}:latest
 
       - name: "Publish the Docker image"
