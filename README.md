@@ -33,7 +33,7 @@ Build the image locally
 git clone git@github.com:slavcodev/docker-php.git 
 cd docker-php
 docker build . --file Dockerfile \
-  --tag ghcr.io/slavcodev/docker-php:latest \
+  --tag ghcr.io/slavcodev/docker-php \
   --build-arg PHP_VERSION=8.0-fpm
 ```
 

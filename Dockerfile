@@ -35,6 +35,7 @@ ARG RUNTIME_DEPS="\
     libpng-dev \
     libonig-dev \
     libxml2-dev \
+    libzip-dev \
     zip \
     unzip \
     "
@@ -52,17 +53,15 @@ ARG PHP_EXT_INSTALL="\
     zip \
     "
 
-ARG PHP_EXT_ENABLE="\
-    "
+ARG PHP_EXT_ENABLE=""
 
 # TODO: Add xdebug default config.
 # Example: memcached
 ARG PECL_EXT_INSTALL="\
-    xdebug-3.0.0 \
+    xdebug \
     "
 
-ARG PECL_EXT_ENABLE="\
-    "
+ARG PECL_EXT_ENABLE=""
 
 # If you are having difficulty figuring out which Debian or Alpine packages need to be installed before `docker-php-ext-install`,
 # then have a look at the [install-php-extensions project](https://github.com/mlocati/docker-php-extension-installer).
@@ -75,13 +74,13 @@ RUN apt-get update && \
 # RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 
 # Install core extensions
-RUN if [ -z "${PHP_EXT_INSTALL}" ]; then docker-php-ext-install -j "$(nproc)" ${PHP_EXT_INSTALL}; fi
-RUN if [ -z "${PHP_EXT_ENABLE}" ]; then docker-php-ext-enable ${PHP_EXT_ENABLE}; fi
+RUN if [ -n "${PHP_EXT_INSTALL}" ]; then docker-php-ext-install -j "$(nproc)" ${PHP_EXT_INSTALL}; fi
+RUN if [ -n "${PHP_EXT_ENABLE}" ]; then docker-php-ext-enable ${PHP_EXT_ENABLE}; fi
 
 # Install PECL extensions.
 # If PECL extensions required compiling options, should be set using argument `PHP_EXTRA_CONFIGURE_ARGS`.
-RUN if [ -z "${PECL_EXT_INSTALL}" ]; then pecl install ${PECL_EXT_INSTALL}; fi
-RUN if [ -z "${PECL_EXT_ENABLE}" ]; then docker-php-ext-enable ${PECL_EXT_ENABLE}; fi
+RUN if [ -n "${PECL_EXT_INSTALL}" ]; then pecl install ${PECL_EXT_INSTALL}; fi
+RUN if [ -n "${PECL_EXT_ENABLE}" ]; then docker-php-ext-enable ${PECL_EXT_ENABLE}; fi
 
 # Install composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
