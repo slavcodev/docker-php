@@ -61,9 +61,6 @@ docker run --name='php' \
     ghcr.io/slavcodev/docker-php:latest
 ```
 
-> This is a private package, thus requires access to it
-> `echo $GITHUB_PACKAGES_PAT | docker login ghcr.io -u $GITHUB_USERNAME --password-stdin`
-
 # Publish changes
 
 The image is hosted on [Container registry][link-github-package].
