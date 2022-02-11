@@ -51,6 +51,7 @@ ARG PHP_EXT_INSTALL="\
     gettext \
     gd \
     zip \
+    sockets \
     "
 
 ARG PHP_EXT_ENABLE=""
@@ -62,6 +63,10 @@ ARG PECL_EXT_INSTALL="\
     "
 
 ARG PECL_EXT_ENABLE=""
+
+# Workaround to build ext-socket
+# https://github.com/docker-library/php/issues/1245#issuecomment-1019957169
+ENV CFLAGS="$CFLAGS -D_GNU_SOURCE"
 
 # If you are having difficulty figuring out which Debian or Alpine packages need to be installed before `docker-php-ext-install`,
 # then have a look at the [install-php-extensions project](https://github.com/mlocati/docker-php-extension-installer).
