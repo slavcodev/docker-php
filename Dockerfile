@@ -52,6 +52,7 @@ ARG PHP_EXT_INSTALL="\
     gd \
     zip \
     sockets \
+    soap \
     "
 
 ARG PHP_EXT_ENABLE=""
