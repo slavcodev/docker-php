@@ -36,6 +36,7 @@ ARG RUNTIME_DEPS="\
     libonig-dev \
     libxml2-dev \
     libzip-dev \
+    libpq-dev \
     zip \
     unzip \
     "
@@ -46,6 +47,7 @@ ARG PHP_EXT_INSTALL="\
     exif \
     mbstring \
     pdo_mysql \
+    pdo_pgsql \
     intl \
     pcntl \
     gettext \
