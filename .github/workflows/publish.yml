@@ -19,8 +19,6 @@ jobs:
       matrix:
         # https://hub.docker.com/_/php/
         php-version:
-          - '7.3-fpm'
-          - '7.4-fpm'
           - '8.0-fpm'
           - '8.1-fpm'
           - '8.2-fpm'
