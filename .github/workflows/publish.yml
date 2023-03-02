@@ -16,15 +16,17 @@ jobs:
 
     strategy:
       matrix:
+        # https://hub.docker.com/_/php/
         php-version:
           - '7.3-fpm'
           - '7.4-fpm'
           - '8.0-fpm'
           - '8.1-fpm'
+          - '8.2-fpm'
 
     env:
       IMAGE_NAME: $( echo ghcr.io/${GITHUB_REPOSITORY} )
-      IMAGE_LATEST: '8.1-fpm'
+      IMAGE_LATEST: '8.2-fpm'
 
     steps:
       - uses: actions/checkout@v2
