@@ -21,6 +21,7 @@ jobs:
         php-version:
           - '8.2-fpm'
           - '8.3-fpm'
+          - '8.3-cli'
 
     env:
       IMAGE_NAME: $( echo ghcr.io/${GITHUB_REPOSITORY} )
