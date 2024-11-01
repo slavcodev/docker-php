@@ -87,7 +87,7 @@ RUN if [ -n "${PHP_EXT_ENABLE}" ]; then docker-php-ext-enable ${PHP_EXT_ENABLE};
 
 # Install PECL extensions.
 # If PECL extensions required compiling options, should be set using argument `PHP_EXTRA_CONFIGURE_ARGS`.
-RUN if [ -n "${PECL_EXT_INSTALL}" ]; then pecl install ${PECL_EXT_INSTALL}; fi
+RUN if [ -n "${PECL_EXT_INSTALL}" ]; then pecl install ${PECL_EXT_INSTALL} && rm -rf /tmp/pear; fi
 RUN if [ -n "${PECL_EXT_ENABLE}" ]; then docker-php-ext-enable ${PECL_EXT_ENABLE}; fi
 
 # Install composer
