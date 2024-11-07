@@ -46,6 +46,7 @@ ARG PHP_EXT_INSTALL="\
     calendar \
     exif \
     mbstring \
+    mysqli \
     pdo_mysql \
     pdo_pgsql \
     intl \
