@@ -1,2 +1,6 @@
 # Hidden files
 .*
+!/.github
+!.editorconfig
+!.gitattributes
+!.gitignore
