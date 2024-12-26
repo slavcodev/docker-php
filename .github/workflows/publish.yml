@@ -27,10 +27,12 @@ jobs:
           - '8.2-fpm'
           - '8.3-fpm'
           - '8.3-cli'
+          - '8.4-fpm'
+          - '8.4-cli'
 
     env:
       IMAGE_REGISTRY: ghcr.io
-      IMAGE_LATEST: '8.3-fpm'
+      IMAGE_LATEST: '8.4-fpm'
 
     steps:
       - uses: docker/setup-qemu-action@v3

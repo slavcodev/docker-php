@@ -47,6 +47,7 @@ ARG PHP_EXT_INSTALL="\
     exif \
     mbstring \
     mysqli \
+    pdo \
     pdo_mysql \
     pdo_pgsql \
     intl \
