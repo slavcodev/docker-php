@@ -1,6 +1,6 @@
 # The images with `apt-get` are requried.
 # https://hub.docker.com/_/php/
-ARG PHP_VERSION
+ARG PHP_VERSION=latest
 
 FROM php:${PHP_VERSION}
 
@@ -9,16 +9,14 @@ ARG DOCKER_IMAGE_MAINTAINER="Veaceslav Medvedev <slavcopost@gmail.com>"
 ARG DOCKER_IMAGE_LICENSE="MIT"
 ARG DOCKER_IMAGE_VENDOR="slavcodev"
 
-MAINTAINER "${DOCKER_IMAGE_MAINTAINER}"
-
-LABEL maintainer="${DOCKER_IMAGE_MAINTAINER}" \
-    org.opencontainers.image.source="${DOCKER_IMAGE_SOURCE}" \
+LABEL org.opencontainers.image.source="${DOCKER_IMAGE_SOURCE}" \
+    org.opencontainers.image.authors="${DOCKER_IMAGE_MAINTAINER}" \
     org.label-schema.license="${DOCKER_IMAGE_LICENSE}" \
     org.label-schema.license="${DOCKER_IMAGE_LICENSE}" \
     org.label-schema.vendor="${DOCKER_IMAGE_VENDOR}" \
     org.label-schema.name="php" \
     org.label-schema.description="While designed for web development, the PHP scripting language also provides general-purpose use." \
-    org.label-schema.version="${MAILCATCHER_VERSION}"
+    org.label-schema.version="${PHP_VERSION}"
 
 HEALTHCHECK NONE
 
@@ -31,12 +29,13 @@ ARG RUNTIME_DEPS="\
     git \
     curl \
     libfreetype6-dev \
+    libicu-dev \
     libjpeg62-turbo-dev \
-    libpng-dev \
     libonig-dev \
+    libpng-dev \
+    libpq-dev \
     libxml2-dev \
     libzip-dev \
-    libpq-dev \
     zip \
     unzip \
     "
@@ -71,7 +70,7 @@ ARG PECL_EXT_ENABLE=""
 
 # Workaround to build ext-socket
 # https://github.com/docker-library/php/issues/1245#issuecomment-1019957169
-ENV CFLAGS="$CFLAGS -D_GNU_SOURCE"
+ENV CFLAGS="${CFLAGS:-} -D_GNU_SOURCE"
 
 # If you are having difficulty figuring out which Debian or Alpine packages need to be installed before `docker-php-ext-install`,
 # then have a look at the [install-php-extensions project](https://github.com/mlocati/docker-php-extension-installer).

@@ -57,7 +57,7 @@ jobs:
             type=raw,value=${{ matrix.php-version }}
             type=raw,value=latest,enable=${{ matrix.php-version == env.IMAGE_LATEST }}
           labels: |
-            maintainer=Veaceslav Medvedev <slavcopost@gmail.com>
+            org.opencontainers.image.authors=Veaceslav Medvedev <slavcopost@gmail.com>
             org.opencontainers.image.licenses=MIT
             org.opencontainers.image.vendor=slavcodev
 
